@@ -63,7 +63,7 @@ inventory and sales history.
 Requires Python 3.9+.
 
 ```bash
-git clone https://github.com/<your-github-username>/supply-chain-analytics-dbt.git
+git clone https://github.com/<your-github-username>/scm-analytics-dbt.git
 cd supply-chain-analytics-dbt
 pip install dbt-duckdb
 ```
