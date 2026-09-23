@@ -5,3 +5,4 @@ env.txt
 profiles.yml
 *.duckdb
 .user.yml
+.venv/
