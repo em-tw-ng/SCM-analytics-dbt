@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: stg_skus
+    description: One row per SKU. Renamed/typed pass-through of the sku seed.
+    columns:
+      - name: sku_id
+        data_tests: [unique, not_null]
+
+  - name: stg_purchase_orders
+    description: >
+      One row per PO line. Adds `was_on_time` and `was_short_shipped` boolean
+      flags — kept here rather than downstream because they describe a fact
+      about this row alone, not a cross-row aggregate.
+    columns:
+      - name: po_id
+        data_tests: [unique, not_null]
+
+  - name: stg_inventory_snapshot
+    description: Daily on-hand quantity per SKU per DC.
+    columns:
+      - name: snapshot_date
+        data_tests: [not_null]
+
+  - name: stg_sales
+    description: Daily units sold per SKU per DC.
+    columns:
+      - name: sale_date
+        data_tests: [not_null]

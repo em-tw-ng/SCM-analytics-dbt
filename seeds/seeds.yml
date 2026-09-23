@@ -1,0 +1,67 @@
+version: 2
+
+seeds:
+  - name: skus
+    description: >
+      One row per SKU (product), standing in for a source-system product
+      table. In a real deployment this would instead be a `source()` in the
+      warehouse loaded by an EL tool (Fivetran, Airbyte) — it's a seed here
+      only because this is a self-contained portfolio project with no live
+      source system behind it.
+    config:
+      column_types:
+        unit_cost: decimal(10,2)
+    columns:
+      - name: sku_id
+        data_tests: [unique, not_null]
+      - name: sku_name
+        data_tests: [not_null]
+      - name: category
+        data_tests: [not_null]
+      - name: unit_cost
+        data_tests: [not_null]
+
+  - name: purchase_orders
+    description: One row per PO line — expected vs. received quantity and date, per vendor/SKU/DC.
+    columns:
+      - name: po_id
+        data_tests: [unique, not_null]
+      - name: vendor_id
+        data_tests: [not_null]
+      - name: sku_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('skus')
+                field: sku_id
+      - name: expected_qty
+        data_tests: [not_null]
+      - name: received_qty
+        data_tests: [not_null]
+
+  - name: inventory_snapshot
+    description: Daily on-hand quantity per SKU per distribution center.
+    columns:
+      - name: sku_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('skus')
+                field: sku_id
+      - name: on_hand_qty
+        data_tests: [not_null]
+
+  - name: sales
+    description: Daily units sold per SKU per distribution center.
+    columns:
+      - name: sku_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('skus')
+                field: sku_id
+      - name: units_sold
+        data_tests: [not_null]

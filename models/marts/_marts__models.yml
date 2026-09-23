@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: fct_vendor_fill_rate
+    description: >
+      One row per vendor. Fill rate and on-time rate over the trailing 90
+      days of purchase-order activity — answers "which vendors are we
+      actually getting what we ordered from, on time?"
+    columns:
+      - name: vendor_id
+        data_tests: [unique, not_null]
+      - name: fill_rate
+        data_tests:
+          - not_null
+      - name: on_time_rate
+        data_tests:
+          - not_null
+
+  - name: fct_inventory_health
+    description: >
+      One row per SKU/DC/day. Trailing-30-day in-stock rate and
+      days-of-supply (on-hand ÷ trailing-28-day average daily sales) — the
+      grain an inventory-health dashboard would query directly.
+    columns:
+      - name: activity_date
+        data_tests: [not_null]
+      - name: sku_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_skus')
+                field: sku_id
+      - name: on_hand_qty
+        data_tests: [not_null]
+
+  - name: fct_sku_sales_performance
+    description: >
+      One row per SKU. Sell-through rate (units sold ÷ units received) and
+      its rank across the catalog — "what's actually moving vs. what's
+      just sitting on the shelf."
+    columns:
+      - name: sku_id
+        data_tests: [unique, not_null]
+      - name: sell_through_rank
+        data_tests: [not_null]
