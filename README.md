@@ -12,7 +12,7 @@ portable SQL so it can target Snowflake with a profile change only.
 - **Layered modeling** — `staging` → `intermediate` → `marts`, following
   dbt's recommended project structure.
 - **Data tests** — `unique`, `not_null`, and `relationships` tests on seeds
-  and models (47 tests, all passing).
+  and models (35 tests, all passing).
 - **Documentation** — model and column descriptions, with a generated data
   dictionary and lineage graph via `dbt docs`.
 - **Window functions** — trailing 28-day average daily sales, trailing
