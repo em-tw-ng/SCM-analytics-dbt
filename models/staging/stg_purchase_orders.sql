@@ -16,6 +16,7 @@ renamed as (
         cast(received_date as date) as received_date,
         expected_qty,
         received_qty,
+		received_date - order_date as lead_time_days,
         -- derived flags kept in staging since they describe *this* row, not a business aggregate
         received_date <= expected_date as was_on_time,
         received_qty < expected_qty as was_short_shipped
