@@ -12,7 +12,7 @@ portable SQL so it can target Snowflake with a profile change only.
 - **Layered modeling** — `staging` → `intermediate` → `marts`, following
   dbt's recommended project structure.
 - **Data tests** — `unique`, `not_null`, and `relationships` tests on seeds
-  and models (35 tests, all passing).
+  and models (37 tests, all passing).
 - **Documentation** — model and column descriptions, with a generated data
   dictionary and lineage graph via `dbt docs`.
 - **Window functions** — trailing 28-day average daily sales, trailing
@@ -98,6 +98,5 @@ No model changes are needed.
 ## Roadmap
 
 - Add `dbt_utils` (surrogate keys, date spine)
-- Custom singular tests (e.g. on-hand quantity is never negative)
 - Incremental materialization for `fct_inventory_health`
 - A BI dashboard on top of the marts layer

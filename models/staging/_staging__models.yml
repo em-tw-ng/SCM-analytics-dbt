@@ -15,6 +15,9 @@ models:
     columns:
       - name: po_id
         data_tests: [unique, not_null]
+      - name: lead_time_days
+        description: Days from order to receipt (received_date - order_date).
+        data_tests: [not_null]
 
   - name: stg_inventory_snapshot
     description: Daily on-hand quantity per SKU per DC.
