@@ -1,8 +1,5 @@
 -- One row per SKU: sell-through rate (units sold ÷ units received) and its
--- rank across the catalog, over all seed history. Written with a windowed
--- CTE + outer filter rather than QUALIFY so it runs unchanged on engines
--- that don't support QUALIFY (Snowflake and DuckDB both do, but this keeps
--- the model portable).
+-- rank across the catalog, over all seed history. 
 
 with sales as (
 
@@ -41,7 +38,7 @@ ranked as (
 
     select
         *,
-        rank() over (order by sell_through_rate desc) as sell_through_rank
+        rank() over (order by sell_through_rate desc nulls last) as sell_through_rank
 
     from joined
 
