@@ -40,7 +40,12 @@ with_trailing_avg as (
             partition by sku_id, dc_id
             order by activity_date
             rows between 27 preceding and current row
-        ) as avg_daily_sales_28d
+        ) as avg_daily_sales_28d, 
+		avg(units_sold) over (
+            partition by sku_id, dc_id
+            order by activity_date
+            rows between 6 preceding and current row
+        ) as avg_daily_sales_7d
 
     from joined
 
